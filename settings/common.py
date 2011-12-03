@@ -75,10 +75,9 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
-ROOT_URLCONF = "temp.urls"
+ROOT_URLCONF = "chirpradio-webcontrol.urls"
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_ROOT, "templates"),
@@ -104,6 +103,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
      
     # project
+    "apps.webcontrol",
 ]
 
 FIXTURE_DIRS = [
@@ -112,9 +112,7 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS": False,
-}
+SERVE_MEDIA = False
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

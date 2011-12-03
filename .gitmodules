@@ -4,3 +4,6 @@
 [submodule "bootstrap"]
 	path = bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "utils"]
+	path = utils
+	url = git://github.com/emperorcezar/Django-utils.git

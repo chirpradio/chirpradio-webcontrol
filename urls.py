@@ -10,9 +10,7 @@ handler500 = "pinax.views.server_error"
 
 
 urlpatterns = patterns("",
-    url(r"^$", direct_to_template, {
-        "template": "homepage.html",
-    }, name="home"),
+    url(r"^webcontrol/", include('apps.webcontrol.urls')),
     url(r"^admin/", include(admin.site.urls)),
 )
 
