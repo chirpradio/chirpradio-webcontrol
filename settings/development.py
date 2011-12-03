@@ -11,6 +11,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 SERVE_MEDIA = True
 
+COMPRESS_ENABLED = True
 
 DATABASES = {
     "default": {

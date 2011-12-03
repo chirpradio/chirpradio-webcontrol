@@ -57,6 +57,13 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static-files"),
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -101,6 +108,10 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.staticfiles",
+    
+    # Third party
+    "compressor",
      
     # project
     "apps.webcontrol",
@@ -113,6 +124,13 @@ FIXTURE_DIRS = [
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
 SERVE_MEDIA = False
+
+# Django-compressor
+COMPRESS_ENABLED = True
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

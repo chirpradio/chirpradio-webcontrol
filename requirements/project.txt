@@ -4,4 +4,7 @@
 --requirement=base.txt
 
 # Put project-specific requirements here.
-# See http://pip-installer.org/requirement-format.html for more information.
+# See http://pip-installer.org/requirement-format.html for more
+# information.
+
+django-compressor

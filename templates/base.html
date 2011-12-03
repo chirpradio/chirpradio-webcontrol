@@ -1,3 +1,5 @@
+{% load compress %}
+
 <!doctype html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
@@ -35,6 +37,7 @@
 <script src="{{ STATIC_URL }}/js/modernizr-2.0.6.min.js"></script>
 {% endblock modernizr_js %}
 
+{% compress js %}
 <script type="text/javascript">
 $(document).ready(function(){
   // Dropdown example for topbar nav
@@ -50,6 +53,7 @@ $(document).ready(function(){
   });
 });
 </script>
+{% endcompress %}
 
 {% spaceless %}
     {% block head %}{% endblock %}
