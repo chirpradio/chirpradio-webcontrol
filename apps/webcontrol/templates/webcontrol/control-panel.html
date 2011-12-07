@@ -1,5 +1,10 @@
 {% extends "two-column.html" %}
+{% load webcontrol %}
 
 {% block sidebar %}
-<button class="btn">Stuff</button>
+{% artist_import_menu %}
 {% endblock sidebar %}
+
+{% block right_content %}
+As steps become available you will see them appear in the left.
+{% endblock right_content %}

@@ -22,19 +22,22 @@
 
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory: mathiasbynens.be/notes/touch-icons -->
 
-<link rel="stylesheet" href="{{ STATIC_URL }}/css/boilerplate.css">
-
+<link rel="stylesheet" href="{{ STATIC_URL }}css/boilerplate.css">
 
 {% block bootstrap_css %}
 <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css">
 {% endblock %}
+
+{% compress css %}
+<link rel="stylesheet" type="text/less" href="{{ STATIC_URL }}css/style.less">
+{% endcompress %}
 
 {% block jquery_js %}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 {% endblock %}
 
 {% block modernizr_js %}
-<script src="{{ STATIC_URL }}/js/modernizr-2.0.6.min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/modernizr-2.0.6.min.js"></script>
 {% endblock modernizr_js %}
 
 {% compress js %}

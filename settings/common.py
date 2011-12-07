@@ -82,6 +82,7 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "utils.middleware.ViewNameMiddleware",
 ]
 
 ROOT_URLCONF = "chirpradio-webcontrol.urls"
@@ -97,6 +98,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+    'django.core.context_processors.static',
+
 ]
 
 INSTALLED_APPS = [
@@ -129,7 +132,7 @@ SERVE_MEDIA = False
 COMPRESS_ENABLED = True
 
 COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),
+    ('text/less', 'lessc {infile} > {outfile}'),
 )
 
 # local_settings.py can be used to override environment-specific settings
