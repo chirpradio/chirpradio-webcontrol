@@ -57,6 +57,13 @@ STATICFILES_DIRS = [
     os.path.join(PROJECT_ROOT, "static-files"),
 ]
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    # other finders..
+    'compressor.finders.CompressorFinder',
+)
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -75,10 +82,10 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "utils.middleware.ViewNameMiddleware",
 ]
 
-ROOT_URLCONF = "temp.urls"
+ROOT_URLCONF = "chirpradio-webcontrol.urls"
 
 TEMPLATE_DIRS = [
     os.path.join(PROJECT_ROOT, "templates"),
@@ -91,6 +98,8 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.media",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
+    'django.core.context_processors.static',
+
 ]
 
 INSTALLED_APPS = [
@@ -102,8 +111,13 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.messages",
     "django.contrib.humanize",
+    "django.contrib.staticfiles",
+    
+    # Third party
+    "compressor",
      
     # project
+    "apps.webcontrol",
 ]
 
 FIXTURE_DIRS = [
@@ -112,9 +126,14 @@ FIXTURE_DIRS = [
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.session.SessionStorage"
 
-DEBUG_TOOLBAR_CONFIG = {
-    "INTERCEPT_REDIRECTS": False,
-}
+SERVE_MEDIA = False
+
+# Django-compressor
+COMPRESS_ENABLED = True
+
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} > {outfile}'),
+)
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

@@ -9,6 +9,10 @@ from common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+SERVE_MEDIA = True
+
+COMPRESS_ENABLED = True
+COMPRESS_REBUILD_TIMEOUT = 1
 
 DATABASES = {
     "default": {
