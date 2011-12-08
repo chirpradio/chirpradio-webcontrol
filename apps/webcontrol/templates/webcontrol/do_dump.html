@@ -2,7 +2,7 @@
 
 {% block right_content %}
 Check the output below. If you are satisfied, click 'Write Changes' below.
-<div class="term-output">{{ out }}</div>
+{% include "webcontrol/term.html" %}
 <form method="post" action="{% url do-dump %}">
 {% csrf_token %}
 {% if rewrote %}

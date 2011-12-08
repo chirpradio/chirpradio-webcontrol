@@ -1,3 +1,6 @@
 {% if step >= 0 %}
 <a href="{% url do-dump %}"><button class="btn">Dump new artists in dropbox</button></a>
 {% endif %}
+{% if step >= 2 %}
+<a href="{% url diff-whitelist %}"><button class="btn{% if step == 2 %} disabled{% endif %}">Push artist whitelist</button></a>
+{% endif %}

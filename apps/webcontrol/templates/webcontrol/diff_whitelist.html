@@ -1,0 +1,14 @@
+{% extends "webcontrol/control-panel.html" %}
+
+{% block right_content %}
+Check the output below. If you are satisfied, click 'Write Changes' below.
+{% include "webcontrol/term.html" %}
+<form method="post" action="{% url diff-whitelist %}">
+{% csrf_token %}
+{% if pushed %}
+<a href="{% url do-import %}"<button class="btn primary">Next step</button></a>
+{% else %}
+<input type="submit" value="Write changes" class="btn primary"> <a href="{% url diff-whitelist %}"><button class="btn">Run again</button></a>
+{% endif %}
+</form>
+{% endblock right_content %}
