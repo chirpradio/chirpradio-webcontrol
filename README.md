@@ -30,8 +30,7 @@ Install the pip package manager for Python packages:
 
 Install the virtualenv wrapper for convenience:
 
-* Ubuntu: `apt-get install virtualenvwrapper`
-* Mac: follow the [instructions here](http://www.doughellmann.com/docs/virtualenvwrapper/)
+    pip install virtualenvwrapper
 
 Create yourself a virtualenv to develop in:
 
