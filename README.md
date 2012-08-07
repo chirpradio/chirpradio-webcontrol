@@ -45,6 +45,13 @@ you cloned earlier. Install all dependencies like this:
 
     pip install -r requirements/project.txt
 
+Set the following variables in settings/local_settings.py:
+
+    CHIRPMACHINE_VIRTUALENV_COMMAND (which python) 
+    CHIRPMACHINE_BIN_DIR (where the chirpmachine scripts are) 
+    CHIRPMACHINE_LIBRARY_DATA (chirpmachine/chirp/library/data)
+    TRAKTOR_PATH (where collection.nml should be saved) 
+
 Now you can start up a development server:
 
     ./devserver

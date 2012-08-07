@@ -1,0 +1,13 @@
+{% extends "webcontrol/control-panel.html" %}
+
+{% block right_content %}
+{% include "webcontrol/term.html" %}
+{% csrf_token %}
+{% if artists_pushed %}
+<a href="{% url push-artists %}"<button class="btn primary">push to albums and song data to chirpradio!</button></a>
+{% endif %}
+{% if finished %}
+<h1>You're all done!</h1>
+{% endif %}
+
+{% endblock right_content %}
