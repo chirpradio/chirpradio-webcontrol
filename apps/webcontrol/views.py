@@ -60,7 +60,7 @@ def do_import(request):
         out = run_machine_command(['do_periodic_import.py', '--actually-do-import'])
         imported = True
     else:
-        out = run_machine_command(["do_periodic_import.py", "2>&1"])
+        out = run_machine_command(["do_periodic_import.py"])
         checked = True
 
     return render_to_response('webcontrol/do_import.html', locals())
