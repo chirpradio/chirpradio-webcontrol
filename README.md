@@ -45,12 +45,40 @@ you cloned earlier. Install all dependencies like this:
 
     pip install -r requirements/project.txt
 
-Set the following variables in settings/local_settings.py:
+# The Machine
 
-    CHIRPMACHINE_VIRTUALENV_COMMAND (which python) 
-    CHIRPMACHINE_BIN_DIR (where the chirpmachine scripts are) 
-    CHIRPMACHINE_LIBRARY_DATA (chirpmachine/chirp/library/data)
-    TRAKTOR_PATH (where collection.nml should be saved) 
+The [chirpradio-machine](https://github.com/chirpradio/chirpradio-machine)
+is the source for all the command line utilities that handle music imports.
+For convenience, this is included as a git submodule but you need to
+install it into your virtualenv.
+
+    pushd ./machine
+    pip install -r requirements.txt
+    python setup.py develop
+    cp settings_local.py-dist settings_local.py
+    popd
+
+See
+[chirpradio-machine docs](https://github.com/chirpradio/chirpradio-machine#readme)
+for details on the installation / configuration process.
+You'll need to edit some paths in settings_local.py to get it working.
+
+To test that you have it installed right, run this in your virtualenv:
+
+    which do_dump_new_artists_in_dropbox
+
+That should print a path to the executable.
+
+# Configuration
+
+For customization, you can set
+the following variables in settings/local_settings.py:
+
+    CHIRPMACHINE = '/other/chirpmachine'
+    CHIRPMACHINE_LIBRARY_DATA = '/other/chirpmachine/chirp/library/data'
+    TRAKTOR_PATH = '/where/collection.nml/should/be/saved'
+
+# Development
 
 Now you can start up a development server:
 

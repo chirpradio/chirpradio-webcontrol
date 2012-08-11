@@ -112,10 +112,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.humanize",
     "django.contrib.staticfiles",
-    
+
     # Third party
     "compressor",
-     
+
     # project
     "apps.webcontrol",
 ]
@@ -134,6 +134,11 @@ COMPRESS_ENABLED = True
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} > {outfile}'),
 )
+
+CHIRPMACHINE = os.path.join(PROJECT_ROOT, 'machine')
+CHIRPMACHINE_LIBRARY_DATA = os.path.join(CHIRPMACHINE,
+                                         'chirp', 'library', 'data')
+TRAKTOR_PATH = '/tmp'
 
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.

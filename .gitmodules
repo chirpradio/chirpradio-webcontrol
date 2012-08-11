@@ -7,3 +7,6 @@
 [submodule "utils"]
 	path = utils
 	url = git://github.com/emperorcezar/Django-utils.git
+[submodule "machine"]
+	path = machine
+	url = git://github.com/chirpradio/chirpradio-machine.git
