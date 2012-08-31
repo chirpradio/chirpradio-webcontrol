@@ -12,6 +12,7 @@ Alpha version.
 - Activate the chirpradio-machine virtualenv.
 - From the chirpradio-webcontrol directory, do `$ pip install -r requirements.txt`
 - At the moment, you need to use the modified version of `desub.py`. Replace the old version in `site-packages` with the one in the chirpradio-webcontrol directory.
+- You will need to modify the constants at the top of `server.py` to suit the deployment environment.
 
 ## Running WebControl
 
