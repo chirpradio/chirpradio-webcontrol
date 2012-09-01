@@ -8,11 +8,13 @@ Alpha version.
 
 ## Installation
 
-- Make sure that you have chirpradio-machine installed and configured properly.
-- Activate the chirpradio-machine virtualenv.
+- Create or activate a chirpradio-webcontrol virtualenv
+- Make sure that you have [chirpradio-machine](https://github.com/chirpradio/chirpradio-machine)
+  configured properly; install it into the virtualenv with
+  `python setup.py develop`
 - From the chirpradio-webcontrol directory, do `$ pip install -r requirements.txt`
-- At the moment, you need to use the modified version of `desub.py`. Replace the old version in `site-packages` with the one in the chirpradio-webcontrol directory.
-- You will need to modify the constants at the top of `server.py` to suit the deployment environment.
+- copy `settings_local-dist.py` to `settings_local.py`. Add any custom
+  settings to it.
 
 ## Running WebControl
 

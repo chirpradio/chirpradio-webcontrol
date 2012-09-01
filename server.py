@@ -5,26 +5,20 @@ import datetime
 import desub
 import os
 
-# equivalent to `$ which python` in the chirpradio-machine dir on your machine
-CHIRPMACHINE_VIRTUALENV_COMMAND = '/Users/trevorborg/workspace/chirp/chirpradio-machine/ENV-machine/bin/python'
-# [path/to/chirpradio-machine]/chirp/library
-CHIRPMACHINE_BIN_DIR = '/Users/trevorborg/workspace/chirp/CHIRP-ENV/bin/'
-CHIRPMACHINE_LIBRARY_DATA = '~/workspace/chirp/chirpradio-machine/chirp/library/data/'
-TRAKTOR_PATH = '/Users/trevorborg/fake-traktor'
+from settings_local import *
 
 PROCESS_ARGUMENTS = {
-    # Truth in the value tuple signifies that this is a chirpmachine script
-    "dump-new-artists-in-dropbox": (['do_dump_new_artists_in_dropbox'], True),
-    "actually-dump-new-artists-in-dropbox": (['do_dump_new_artists_in_dropbox', '--rewrite'], True),
-    "do-periodic-import": (['do_periodic_import'], True),
-    "actually-do-periodic-import": (['do_periodic_import', '--actually-do-import'], True),
-    "generate-collection-nml": (['do_generate_collection_nml'], True),
-    "push-artists-to-chirpradio": (['do_push_artists_to_chirpradio'], True),
-    "push-albums-and-tracks-to-chirpradio": (['do_push_to_chirpradio.py'], True),
-    "diff-artist-whitelist": (['git', 'diff', 'artist-whitelist'], False),
-    "commit-artist-whitelist": (['git', 'commit', 'artist-whitelist', 'm', 'Adding new artists'], False),
-    "push-artist-whitelist": (['git', 'push'], False),
-    "install-collection-nml": (['install', '-m', '0775', '-g', 'traktor', 'output.nml', TRAKTOR_PATH + '/new-collection.nml'], False)
+    "dump-new-artists-in-dropbox": ['do_dump_new_artists_in_dropbox'],
+    "actually-dump-new-artists-in-dropbox": ['do_dump_new_artists_in_dropbox', '--rewrite'],
+    "do-periodic-import": ['do_periodic_import'],
+    "actually-do-periodic-import": ['do_periodic_import', '--actually-do-import'],
+    "generate-collection-nml": ['do_generate_collection_nml'],
+    "push-artists-to-chirpradio": ['do_push_artists_to_chirpradio'],
+    "push-albums-and-tracks-to-chirpradio": ['do_push_to_chirpradio.py'],
+    "diff-artist-whitelist": ['git', 'diff', 'artist-whitelist'],
+    "commit-artist-whitelist": ['git', 'commit', 'artist-whitelist', 'm', 'Adding new artists'],
+    "push-artist-whitelist": ['git', 'push'],
+    "install-collection-nml": ['install', '-m', '0775', '-g', 'traktor', 'output.nml', TRAKTOR_PATH + '/new-collection.nml']
 }
 
 PROCESS_MESSAGES = {
@@ -49,20 +43,14 @@ def index():
 
 @app.route('/<process_name>')
 def start_process(process_name):
-    args, is_machine_cmd = PROCESS_ARGUMENTS.get(process_name, (False, False))
+    args = PROCESS_ARGUMENTS[process_name]
     message = PROCESS_MESSAGES.get(process_name, False)
     if args:
-        if is_machine_cmd:
-            if process_name == 'push-albums-and-tracks-to-chirpradio':
-                # this is the only case that requires a run-time variable
-                timestamp = ''.join(datetime.date.today().isoformat().split('-')) + '-000000'
-                args.append('--start-at=' + timestamp)
-            proc = desub.join(args, cwd=CHIRPMACHINE_BIN_DIR)
-        else:
-            if process_name == 'install-collection-nml':
-                proc = desub.join(args, cwd=CHIRPMACHINE_BIN_DIR)
-            else:
-                proc = desub.join(args, cwd=CHIRPMACHINE_LIBRARY_DATA)
+        if process_name == 'push-albums-and-tracks-to-chirpradio':
+            # this is the only case that requires a run-time variable
+            timestamp = ''.join(datetime.date.today().isoformat().split('-')) + '-000000'
+            args.append('--start-at=' + timestamp)
+        proc = desub.join(args)
         if proc.is_running():
             return jsonify({'started': False, 'error': 'process is already running'})
         else:
@@ -74,20 +62,14 @@ def start_process(process_name):
 
 @app.route('/polling/<process_name>')
 def poll(process_name):
-    args, is_machine_cmd = PROCESS_ARGUMENTS.get(process_name, (False, False))
+    args = PROCESS_ARGUMENTS[process_name]
     if args:
-        if is_machine_cmd:
-            if process_name == 'push-albums-and-tracks-to-chirpradio':
-                # this could potentially backfire if you happen to start the process in
-                # the moments before midnight. I would be open to a better way.
-                timestamp = ''.join(datetime.date.today().isoformat().split('-')) + '-000000'
-                args.append('--start-at=' + timestamp)
-            proc = desub.join(args, cwd=CHIRPMACHINE_BIN_DIR)
-        else:
-            if process_name == 'install-collection-nml':
-                proc = desub.join(args, cwd=CHIRPMACHINE_BIN_DIR)
-            else:
-                proc = desub.join(args, cwd=CHIRPMACHINE_LIBRARY_DATA)
+        if process_name == 'push-albums-and-tracks-to-chirpradio':
+            # this could potentially backfire if you happen to start the process in
+            # the moments before midnight. I would be open to a better way.
+            timestamp = ''.join(datetime.date.today().isoformat().split('-')) + '-000000'
+            args.append('--start-at=' + timestamp)
+        proc = desub.join(args)
         if proc.is_running():
             return jsonify({'err': proc.stderr.read(), 'out': proc.stdout.read(), 'is_done': False})
         else:
