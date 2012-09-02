@@ -1,13 +1,16 @@
 App = Em.Application.create();
 
-App.DEBUG = true;
-App.LIVE_MODE_AVAILABLE = false;
+App.DEBUG = ($('span').data('debug') === 'True') ? true : false;
+App.LIVE_MODE_AVAILABLE = ($('span').data('live') === 'True') ? true : false;
 
 App.Process = Em.Object.extend({
   name  : null,
   out   : null,
   err   : null,
+  polling: false,
   done  : false,
+
+  ready: function() { return !this.get('polling'); }.property('polling'),
 
   has_output: function() {
     return (this.get('out') || this.get('err')) ? true : false;
@@ -26,8 +29,14 @@ App.Process = Em.Object.extend({
   }.property('path'),
 
   parse_response: function(response) {
+    (function(p, ctx) { return p ? null : ctx.set('polling', true); } )(this.get('polling'), this);
     this.set('out', response.out);
     this.set('err', response.err);
+  },
+
+  finished: function() {
+    this.set('done', true);
+    this.set('polling', false);
   }
 });
 
@@ -42,6 +51,7 @@ App.ApplicationView = Em.View.extend({
 });
 
 App.SplashView = Em.View.extend({
+  classNames: 'splash',
   templateName: 'splash'
 });
 
@@ -49,6 +59,15 @@ App.MainController = Em.ObjectController.extend({
   // set by router
   content   : null,
   processes : null,
+
+  history: Em.View.extend({
+    classNames: ['history'],
+    templateName: 'history'
+  }),
+
+  start_button: Em.View.extend({
+    templateName: 'start_button'
+  }),
 
   messages: {
     'dump-new-artists-in-dropbox' :  'Carefully proofread the list of new artists. If they are all correct, proceed.',
@@ -166,7 +185,7 @@ var router = Em.Router.create({
         start_process: function(router, context) {
           router.transitionTo('polling');
           $.get(context.context.get('path'), function(response) {
-            if (!response.started) context.context.set('err', response.error);
+            if (!response.started) context.context.set('err', response.err);
             router.send('poll', context.context);
           })
           .error(function(err) {
@@ -185,12 +204,13 @@ var router = Em.Router.create({
           $.get(context.get('polling_path'), function(response) {
             if (response.hasOwnProperty('server_error')) {
               context.set('err', response.server_error);
+              context.finished();
               router.transitionTo('completed');
               return;
             }
             context.parse_response(response);
             if (response.is_done) {
-              context.set('done', true);
+              context.finished();
               router.transitionTo('completed');
             } else {
               router.send('poll', context);
@@ -202,9 +222,7 @@ var router = Em.Router.create({
             }
             context.set('err', $(err.responseText).text());
           });
-        },
-
-        complete_process: Em.Route.transitionTo('completed')
+        }
       }),
 
       completed: Em.Route.extend({

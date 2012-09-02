@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, jsonify
+from flask import Flask, jsonify, render_template
 from werkzeug import SharedDataMiddleware
 import sys
 import datetime
@@ -30,7 +30,7 @@ app.wsgi_app = SharedDataMiddleware(app.wsgi_app, {
 
 @app.route('/')
 def index():
-    return redirect(url_for('static', filename='index.html'))
+    return render_template("index.html", DEBUG=DEBUG, LIVE_RUN_IS_AVAILABLE=LIVE_RUN_IS_AVAILABLE)
 
 
 @app.route('/<process_name>')
@@ -70,8 +70,4 @@ def poll(process_name):
         return jsonify({'server_error': 'unrecognized process name: ' + process_name})
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == 'debug':
-            app.run(debug=True)
-    else:
-        app.run()
+    app.run(debug=DEBUG)
