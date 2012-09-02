@@ -24,12 +24,6 @@ From the chirpradio-webcontrol directory, with the chirpradio-machine virtualenv
 python server.py
 ```
 
-or
-
-```
-python server.py debug
-```
-
 ## Activating the Live Version
 
 As of right now, the only available actions in WebControl are `do_dump_new_artists_in_dropbox` and `do_periodic_import` (i.e. the read-only actions).
