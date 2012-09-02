@@ -24,14 +24,6 @@ From the chirpradio-webcontrol directory, with the chirpradio-machine virtualenv
 python server.py
 ```
 
-## Activating the Live Version
-
-As of right now, the only available actions in WebControl are `do_dump_new_artists_in_dropbox` and `do_periodic_import` (i.e. the read-only actions).
-
-If you want make the rest of the scripts available, set the `live_run_available` property of `App.ApplicationController` in `static/js/app.js` to `true`.
-
-You will then have the option of doing a live run.
-
 ## Understanding EmberJS
 
 Ember is a relatively young JS MVC framework. It's tremendously powerful, concise, and convention-driven. But it also can be kind of hard to wrap your head around
