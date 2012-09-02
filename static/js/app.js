@@ -1,6 +1,7 @@
 App = Em.Application.create();
 
 App.DEBUG = true;
+App.LIVE_MODE_AVAILABLE = false;
 
 App.Process = Em.Object.extend({
   name  : null,
@@ -32,7 +33,7 @@ App.Process = Em.Object.extend({
 
 App.ApplicationController = Em.ObjectController.extend({
   // Change this setting to enable the live run option.
-  live_run_available: !App.DEBUG
+  live_run_available: App.LIVE_MODE_AVAILABLE
 });
 
 App.ApplicationView = Em.View.extend({
