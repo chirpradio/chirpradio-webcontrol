@@ -95,42 +95,42 @@ var router = Em.Router.create({
   root: Em.Route.extend({
 
     splash: Em.Route.extend({
-            route: '/',
+      route: '/',
 
-            do_live: function(router) {
-                    var context = App.Process.create({name: 'dump-new-artists-in-dropbox'});
-                    router.get('mainController').set('processes', [
-                            "dump-new-artists-in-dropbox",
-                            "actually-dump-new-artists-in-dropbox",
-                            "diff-artist-whitelist",
-                            "commit-artist-whitelist",
-                            "push-artist-whitelist",
-                            "do-periodic-import",
-                            "actually-do-periodic-import",
-                            "generate-collection-nml",
-                            "install-collection-nml",
-                            "push-artists-to-chirpradio",
-                            "push-albums-and-tracks-to-chirpradio"
-                    ]);
-                    router.transitionTo('main', context);
-            },
+      do_live: function(router) {
+        var context = App.Process.create({name: 'dump-new-artists-in-dropbox'});
+        router.get('mainController').set('processes', [
+          "dump-new-artists-in-dropbox",
+          "actually-dump-new-artists-in-dropbox",
+          "diff-artist-whitelist",
+          "commit-artist-whitelist",
+          "push-artist-whitelist",
+          "do-periodic-import",
+          "actually-do-periodic-import",
+          "generate-collection-nml",
+          "install-collection-nml",
+          "push-artists-to-chirpradio",
+          "push-albums-and-tracks-to-chirpradio"
+        ]);
+        router.transitionTo('main', context);
+      },
 
-            serialize: function() {
-                    return '';
-            },
+      serialize: function() {
+        return '';
+      },
 
-            do_read_only: function(router) {
-                    var context = App.Process.create({name: 'dump-new-artists-in-dropbox'});
-                    router.get('mainController').set('processes', [
-                            "dump-new-artists-in-dropbox",
-                            "do-periodic-import"
-                    ]);
-                    router.transitionTo('main', context);
-            },
+      do_read_only: function(router) {
+        var context = App.Process.create({name: 'dump-new-artists-in-dropbox'});
+        router.get('mainController').set('processes', [
+                "dump-new-artists-in-dropbox",
+                "do-periodic-import"
+        ]);
+        router.transitionTo('main', context);
+      },
 
-            connectOutlets: function(router) {
-                    router.get('applicationController').connectOutlet('splash');
-            }
+      connectOutlets: function(router) {
+        router.get('applicationController').connectOutlet('splash');
+      }
     }),
 
     main: Em.Route.extend({
@@ -142,7 +142,7 @@ var router = Em.Router.create({
 
       connectOutlets: function(router, context) {
         if (!router.get('mainController.processes')) {
-                return router.transitionTo('splash');
+          return router.transitionTo('splash');
         }
         router.get('applicationController').connectOutlet('main', context);
       },
@@ -211,13 +211,13 @@ var router = Em.Router.create({
         route: '/done',
 
         start_process: function(router, context) {
-                router.transitionTo('ready');
-                router.send('start_process', context);
+          router.transitionTo('ready');
+          router.send('start_process', context);
         },
 
         go_to_next_step: function(router) {
-                var context = App.Process.create({name: router.get('mainController.next_step_name')});
-                router.transitionTo('main', context);
+          var context = App.Process.create({name: router.get('mainController.next_step_name')});
+          router.transitionTo('main', context);
         }
       })
     })
