@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>CHIRPRADIO WEB CONTROL</title>
-        <meta name="description" content="A browser UI for CLI scripts. The CHIRP crew uses this to lend a friendly visual interface to the DJ database upload flow. This project demonstrates a generic pattern for using Ember.js to run subprocesses against API endpoints. While you could use basically anything on the server, this project's needs are suited particularly by: [flask](http://flask.pocoo.org/) for a dead simple HTTP server and [desub](http://desub.readthedocs.org/en/latest/index.html) for running detached *NIX subprocesses safely over significant periods of time on the local host. This HTML document is composed of handlebars templates. Ask anyone you know and they will tell you we depend on jQuery like everybody else. [Fork us on github](https://github.com/chirpradio/chirpradio-webcontrol)">
+        <meta name="description" content="A browser UI for CLI scripts. The CHIRP crew uses this to lend a friendly visual interface to the DJ database upload flow. This project demonstrates a generic pattern for using Ember.js to run subprocesses against API endpoints. While you could use basically anything on the server, this project's needs are suited particularly by: [flask](http://flask.pocoo.org/) for a dead simple HTTP server and [desub](http://desub.readthedocs.org/en/latest/index.html) for running detached *NIX subprocesses safely over significant periods of time on the local host. [Fork us on github](https://github.com/chirpradio/chirpradio-webcontrol)">
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
@@ -21,9 +21,17 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-        <span data-debug="{{DEBUG}}" data-live="{{LIVE_RUN_IS_AVAILABLE}}"></span>
+
+
+        <!-- Configuration vars bubbled to the client -->
+
+        <span id="config"
+            data-debug="{{ 'true' if DEBUG else 'false' }}" 
+            data-live="{{ 'true' if LIVE_RUN_IS_AVAILABLE else 'false' }}">
+        </span>
 
         {% raw %}
+        
         <!-- Handlebars templates corresponding to views in App.js -->
 
         <script type="text/x-handlebars" data-template-name="app">
@@ -36,15 +44,13 @@
             <a class="splash" {{action do_read_only}}>Read Only</a>
         </script>
 
-        <!-- #TODO check if polling and swap positions of start and go-to buttons for better UX -->
-
         <script type="text/x-handlebars" data-template-name="main">
             <div class="main">
                 <div class="header"><h2>{{space_separated}}</h2></div>
                 {{#if message}}<div class="message"><p>{{message}}</p></div>{{/if}}
                 <div class="logs">
-                    <span class="out">{{#if has_output}}{{out}}{{else}}{{#if done}}[no output]{{/if}}{{/if}}</span>
-                    <span class="err">{{err}}</span>
+                    <div class="out">{{#if has_output}}{{out}}{{else}}{{#if done}}[no output]{{/if}}{{/if}}</div>
+                    <div class="err">{{err}}</div>
                 </div>
                 <div class="buttons">
                     {{#if done}}
@@ -61,7 +67,11 @@
         </script>
 
         <script type="text/x-handlebars" data-template-name="start_button">
-            {{#if ready}}<a {{action start_process controller.content}}>start</a> {{else}} <p>running</p> {{/if}}
+            {{#if ready}}
+                <a {{action start_process controller.content}}>start</a>
+            {{else}}
+                <p>running</p>
+            {{/if}}
         </script>
 
         <script type="text/x-handlebars" data-template-name="history">

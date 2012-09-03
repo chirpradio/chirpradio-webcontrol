@@ -1,7 +1,7 @@
 App = Em.Application.create();
 
-App.DEBUG = ($('span').data('debug') === 'True') ? true : false;
-App.LIVE_MODE_AVAILABLE = ($('span').data('live') === 'True') ? true : false;
+App.DEBUG = $('#config').data('debug');
+App.LIVE_MODE_AVAILABLE = $('#config').data('live');
 
 App.Process = Em.Object.extend({
   name  : null,
