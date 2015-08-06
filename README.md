@@ -1,5 +1,13 @@
 # CHIRPRADIO-WEBCONTROL
 
+***
+
+**WARNING**: This app is no longer supported. It has been superceded by
+[chirpradio-manager](https://github.com/chirpradio/chirpradio-manager).
+
+
+***
+
 This is a web interface for running CLI scripts as detached subprocesses at the click of a button.
 
 It uses the [EmberJS](http://emberjs.com/) framework on the client and the [Flask](http://flask.pocoo.org/) python web server to launch and moniter processes via [desub](http://desub.readthedocs.org/en/latest/index.html).
